@@ -85,7 +85,8 @@ class AdaptiveAttentionLSTMNetwork(nn.Module):
     def forward(self, V, x_t, prev_hidden, prev_cell_state):
         s_t, curr_hidden, curr_cell = self.extended_lstm(x_t, prev_hidden, prev_cell_state)
         c_t_hat = self.attention(V, s_t, curr_hidden)
-        output = F.softmax(self.mlp(c_t_hat + curr_hidden),dim=1)
+        # output = F.softmax(self.mlp(c_t_hat + curr_hidden),dim=1)
+        output = self.mlp(c_t_hat + curr_hidden) # use X-entrophy loss!
         return output, curr_hidden, curr_cell
 
 
